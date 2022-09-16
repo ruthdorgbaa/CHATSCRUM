@@ -1,7 +1,8 @@
 import React from 'react';
 import "./App.css";
 
-import SignUp from './sign-up/sign-up'
+import SignUp from './components/sign-up/sign-up'
+import SignIn from './components/sign-in/sign-in'
 
 class App extends React.Component {
   render() {
@@ -9,6 +10,7 @@ class App extends React.Component {
       <div className='App'>
         <h2 className="h2">CHATSCRUM</h2>
         <SignUp/>
+        <SignIn/>
       </div>
     )
   }
