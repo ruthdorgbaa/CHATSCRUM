@@ -1,11 +1,11 @@
 import React from "react";
 import "./sign-up.css";
 const SignUp = () => (
-  <div className="container">
+  <div className="container ">
     <div className="row">
-      <div className="col-9">
-        <h1>Don't have an Account yet?</h1>
-        <h3>Sign up here</h3>
+      <div className="col-4 signup-container">
+        <h3>Don't have an Account yet?</h3>
+        <h5>Sign up here</h5>
         <form>
           <div className="mb-3 row">
             <label for="exampleFormControlInput1" class="form-label flex">
@@ -54,6 +54,7 @@ const SignUp = () => (
           <button type="button" class="btn btn-primary flex">
             Submit
           </button>
+          <p className="flex">Have an account? <a href="!#">Sign In</a></p>
         </form>
       </div>
     </div>
