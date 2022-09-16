@@ -8,6 +8,14 @@ const SignUp = () => (
                 <h3>Sign up here</h3>
                 <form>
                     <div className="mb-3 row">
+                        <label for="exampleFormControlInput1" class="form-label">Full Name</label>
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Full Name" />
+                    </div>
+                    <div className="mb-3 row">
+                        <label for="exampleFormControlInput1" class="form-label"></label>
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Full Name" />
+                    </div>
+                    <div className="mb-3 row">
                         <label for="exampleFormControlInput1" class="form-label">Email address</label>
                         <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
                     </div>
