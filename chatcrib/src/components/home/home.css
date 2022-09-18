@@ -27,3 +27,6 @@ li{
     width: fit-content;
     margin: 20% auto;
 }
+.welcome h1{
+    font-size: 67px;
+}
