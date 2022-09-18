@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link } from 'react-router-dom';
 
-export const schema = yup
+const schema = yup
   .object()
   .shape({
     fullname: yup.string().required().min(5),
@@ -65,7 +65,7 @@ const SignUp = () => {
               Submit
             </button>
             <p className="flex">
-              Have an account? <a href="!#">Sign In</a>
+              Have an account?
               <Link to='/SignIn'> Sign In</Link>
             </p>
             <p><Link to='/'>Back to Home</Link></p>
