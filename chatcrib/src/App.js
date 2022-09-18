@@ -1,24 +1,22 @@
-import React from 'react';
+import React from "react";
 import "./App.css";
-import Home from './components/home/home.js'
-import {BrowserRouter, Route} from 'react-router-dom'
+import Home from "./components/home/home.js";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import SignUp from './components/sign-up/sign-up'
-import SignIn from './components/sign-in/sign-in'
-
+import SignUp from "./components/sign-up/sign-up";
+import SignIn from "./components/sign-in/sign-in";
 
 class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
-        <div className='App'>
-        <Route exact path='/' component={Home}/>
-          <Route path='/SignUp' component={SignUp}/>
-          <Route path='/SignIn' component={SignIn}/>
-      </div>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/SignUp" element={<SignUp />} />
+          <Route path="/SignIn" element={<SignIn/>} />
+        </Routes>
       </BrowserRouter>
-      
-    )
+    );
   }
 }
 export default App;

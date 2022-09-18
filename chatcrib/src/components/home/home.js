@@ -4,12 +4,18 @@ import { Link } from 'react-router-dom';
 
 export default function Home() {
   return (
-      <div className='links'>
-          <h1>WELCOME TO CHATSCRUM</h1>
-          <div>
-              <h4><Link to="/SignUp">SIGN UP</Link></h4>
-              <h4><Link to= "/SignIn">SIGN IN</Link></h4>
-          </div>
-      </div>
+    <div>
+        <nav className='nav'>
+          <h3>CHATSCRUM</h3>
+          <ul >
+              <li><Link className='none' to="/SignUp">Sign Up</Link></li>
+              <li><Link className='none'  to= "/SignIn">Sign In</Link></li>
+          </ul>
+      </nav>
+      <section className='welcome'>
+        <h1>Welcome to CHATSCRUM</h1>
+      </section>
+    </div>
+      
   )
 }
