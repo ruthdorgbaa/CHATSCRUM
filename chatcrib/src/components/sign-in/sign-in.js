@@ -43,9 +43,10 @@ const SignIn = () => (
               <option value="3">Three</option>
             </select>
           </div>
-          <button type="button" class="btn btn-primary flex">
+          <Link to='/scrumboard'><button type="button" class="btn btn-primary flex">
             Submit
-          </button>
+          </button></Link>
+          
             <p><Link to='/'>Back to Home</Link></p>
         </form>
       </div>
