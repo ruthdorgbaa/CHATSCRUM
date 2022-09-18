@@ -1,5 +1,6 @@
 import React from "react";
 import "./sign.in.css";
+import { Link } from 'react-router-dom';
 
 
 const SignIn = () => (
@@ -45,6 +46,7 @@ const SignIn = () => (
           <button type="button" class="btn btn-primary flex">
             Submit
           </button>
+            <p><Link to='/'>Back to Home</Link></p>
         </form>
       </div>
     </div>

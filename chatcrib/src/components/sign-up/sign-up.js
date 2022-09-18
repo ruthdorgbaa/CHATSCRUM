@@ -4,6 +4,7 @@ import content from "../../static/Revs.js";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { Link } from 'react-router-dom';
 
 const schema = yup
   .object()
@@ -65,7 +66,9 @@ const SignUp = () => {
             </button>
             <p className="flex">
               Have an account? <a href="!#">Sign In</a>
+              <Link to='/SignIn'> Sign In</Link>
             </p>
+            <p><Link to='/'>Back to Home</Link></p>
           </form>
         </div>
       </div>
