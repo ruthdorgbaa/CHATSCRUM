@@ -26,6 +26,7 @@
 .welcome{
     width: fit-content;
     margin: 20% auto;
+    text-align: center;
 }
 .welcome h1{
     font-size: 67px;

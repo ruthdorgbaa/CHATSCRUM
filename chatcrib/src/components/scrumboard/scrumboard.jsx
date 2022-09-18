@@ -15,7 +15,10 @@ export class Scrumboard extends Component {
               <p>Project Name: {details.projectName}</p>
           </div>
       </nav>
-      <h1 className='welcome'>Hello {details.fullname} Welcome to your scrumboard</h1>
+      <div className='welcome'>
+        <h2>Hello {details.fullname} Welcome to your scrumboard</h2>
+        <Link to='/'>Home</Link>
+        </div>
       </div>
     )
   }

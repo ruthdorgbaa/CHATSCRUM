@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link } from 'react-router-dom';
 
-const schema = yup
+export const schema = yup
   .object()
   .shape({
     fullname: yup.string().required().min(5),
