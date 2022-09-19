@@ -5,7 +5,38 @@ import './scrumboard.css'
 
 
 export class Scrumboard extends Component {
-  state = details
+  constructor(){
+    super()
+    this.state = {
+      data: details,
+      isOpen: false,
+      task: null
+    }
+  }
+  openModal = () => {
+    this.setState({
+      isOpen: true,
+    })
+  };
+   closeModal = () => {
+    this.setState({
+      isOpen: false,
+    })
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      task: e.target.value
+    })
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault()
+    this.setState({
+      isOpen: false
+    })
+  }
+  
   render() {
     return (
       <div>
@@ -22,36 +53,28 @@ export class Scrumboard extends Component {
             <div>
             <div className='task-content'>
               <h3 className='bg-primary'>Weekly Tasks</h3>
+              <p>{this.state.task}</p>
             </div>
-            <button class='btn btn-primary'>ADD TASK</button>
+            <button onClick={() => this.openModal()} class='btn btn-primary'>ADD TASK</button>
             </div>
             
             <div className='task-container'>
               <div className='task-content'>
                 <h3 className='bg-primary'>Daily Target</h3>
               </div>
-              <button class='btn btn-primary'>ADD TASK</button>
-            </div>
-
-          </div>
-          <div class="modal" >
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Modal title</h5>
-                  <button type="button" class="btn-close"  aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <p>Modal body text goes here.</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-              </div>
             </div>
           </div>
         </div>
+        <div id="modal" className={this.state.isOpen ? "show" : "hidden"}>
+            <div className='modal-header'>
+              <h5>Add Task</h5>
+              <h5 onClick={() => this.closeModal()} id="close" className='btn btn-danger'>X</h5>
+            </div>
+            <form action="" onSubmit={this.handleSubmit}>
+              <input onChange={this.handleChange} className='form-control' type="text" />
+              <button type='submit' className='btn btn-primary'>Confirm</button>
+            </form>
+          </div>
       </div>
     )
   }
