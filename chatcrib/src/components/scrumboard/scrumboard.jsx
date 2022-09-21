@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { details } from '../../static/login-detail'
 import { Link } from 'react-router-dom';
 import './scrumboard.css'
+import Tasks from '../tasks/task'
 
 
 export class Scrumboard extends Component {
@@ -53,7 +54,8 @@ export class Scrumboard extends Component {
             <div>
             <div className='task-content'>
               <h3 className='bg-primary'>Weekly Tasks</h3>
-              <p>{this.state.task}</p>
+                <p>{this.state.task}</p>
+                <Tasks/>
             </div>
             <button onClick={() => this.openModal()} class='btn btn-primary'>ADD TASK</button>
             </div>
