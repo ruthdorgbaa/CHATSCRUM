@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { details } from '../../static/login-detail'
 import { Link } from 'react-router-dom';
 import './scrumboard.css'
+import { reorder, move} from '../tasks/task'
 import Tasks from '../tasks/task'
+import { DragDropContext } from 'react-beautiful-dnd';
 
 
 export class Scrumboard extends Component {
@@ -14,6 +16,45 @@ export class Scrumboard extends Component {
       task: null
     }
   }
+
+  getList = id => this.state[this.id2List[id]];
+
+  onDragEnd = result => {
+    const { source, destination } = result;
+
+    // dropped outside the list
+    if (!destination) {
+        return;
+    }
+
+    if (source.droppableId === destination.droppableId) {
+        const items = reorder(
+            this.getList(source.droppableId),
+            source.index,
+            destination.index
+        );
+
+        let state = { items };
+
+        if (source.droppableId === 'droppable2') {
+            state = { selected: items };
+        }
+
+        this.setState(state);
+    } else {
+        const result = move(
+            this.getList(source.droppableId),
+            this.getList(destination.droppableId),
+            source,
+            destination
+        );
+
+        this.setState({
+            items: result.droppable,
+            selected: result.droppable2
+        });
+    }
+};
   openModal = () => {
     this.setState({
       isOpen: true,
@@ -40,7 +81,7 @@ export class Scrumboard extends Component {
   
   render() {
     return (
-      <div>
+      <DragDropContext>
         <nav className='nav bg-primary'>
           <h3>CHATSCRUM</h3>
           <div >
@@ -50,22 +91,7 @@ export class Scrumboard extends Component {
         </nav>
         <h4>Hello {details.fullname} Welcome to your scrumboard</h4>
         <div className='task-container'>
-          <div style={{ display: "flex" }}>
-            <div>
-            <div className='task-content'>
-              <h3 className='bg-primary'>Weekly Tasks</h3>
-                <p>{this.state.task}</p>
-                <Tasks/>
-            </div>
-            <button onClick={() => this.openModal()} class='btn btn-primary'>ADD TASK</button>
-            </div>
-            
-            <div className='task-container'>
-              <div className='task-content'>
-                <h3 className='bg-primary'>Daily Target</h3>
-              </div>
-            </div>
-          </div>
+          <Tasks/>
         </div>
         <div id="modal" className={this.state.isOpen ? "show" : "hidden"}>
             <div className='modal-header'>
@@ -77,7 +103,7 @@ export class Scrumboard extends Component {
               <button type='submit' className='btn btn-primary'>Confirm</button>
             </form>
           </div>
-      </div>
+      </DragDropContext>
     )
   }
 }

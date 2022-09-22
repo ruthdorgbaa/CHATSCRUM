@@ -1,51 +1,169 @@
-import React, {useState} from 'react'
-import {tasklist} from '../../static/task'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { tasklist } from "../../static/task";
 
-export default function Tasks() {
-    const [taskRoll, updateTaskRoll] = useState(tasklist)
+// fake data generator
+const getItems = count =>
+  Array.from({ length: count }, (v, k) => k).map(k => ({
+    id: `item-${k}`,
+    content: `item ${k}`
+  }));
 
-    const handleOnDragEnd = result => {
-        const items = Array.from(taskRoll);
-        const [reorderedItem] = items.splice(result.source.index, 1);
-        items.splice(result.destination.index, 0, reorderedItem);
+// a little function to help us with reordering the result
+export const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
 
-        updateTaskRoll(items)
+  return result;
+};
+
+export const move = (source, destination, droppableSource, droppableDestination) => {
+    const sourceClone = Array.from(source);
+    const destClone = Array.from(destination);
+    const [removed] = sourceClone.splice(droppableSource.index, 1);
+
+    destClone.splice(droppableDestination.index, 0, removed);
+
+    const result = {};
+    result[droppableSource.droppableId] = sourceClone;
+    result[droppableDestination.droppableId] = destClone;
+
+    return result;
+};
+
+const grid = 8;
+
+const getItemStyle = (isDragging, draggableStyle) => ({
+  // some basic styles to make the items look a bit nicer
+  userSelect: "none",
+  padding: grid * 2,
+  margin: `0 5px ${grid}px 5px`,
+  
+
+  // change background colour if dragging
+  background: isDragging ? "lightgreen" : "white",
+
+  boxShadow: `rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px`,
+  borderRadius: "10px",
+
+  // styles we need to apply on draggables
+  ...draggableStyle
+});
+
+const getListStyle = isDraggingOver => ({
+  background: isDraggingOver ? "lightblue" : "white",
+  padding: grid,
+  width: `100%`,
+});
+
+export default class Task extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: tasklist
+    };
+    this.onDragEnd = this.onDragEnd.bind(this);
+  }
+
+  onDragEnd(result) {
+    // dropped outside the list
+    if (!result.destination) {
+      return;
     }
 
+    const items = reorder(
+      this.state.items,
+      result.source.index,
+      result.destination.index
+    );
+
+    this.setState({
+      items
+    });
+  }
+
+  // Normally you would want to split things out into separate components.
+  // But in this example everything is just done in one place for simplicity
+  render() {
     return (
-        <div className="tasker">
-            <DragDropContext>
-                <div className="container">
-                    <Droppable droppableId="tasket">
-                        {(provided) => (
-                            <div className="weekly box" {...provided.droppableProps} ref={provided.innerRef}>
-                                <h3>Weekly Tasks</h3>
+        <div style={{ display: "flex" }}>
+        <Droppable droppableId="droppable">
+          {(provided, snapshot) => (
+            <div
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+              style={getListStyle(snapshot.isDraggingOver)}
+            >
+                 <div>
+              <div className='task-content'>
+                <h3 className='bg-primary'>Weekly Tasks</h3>
+                {this.state.items.map((item, index) => (
+                <Draggable key={item.id} draggableId={item.id} index={index}>
+                    
+                  {(provided, snapshot) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      style={getItemStyle(
+                        snapshot.isDragging,
+                        provided.draggableProps.style
+                      )}
+                    >
+                      {item.content}
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+                 
+                  {/* <Tasks/> */}
+              </div>
+              <button onClick={() => this.openModal()} class='btn btn-primary'>ADD TASK</button>
+            </div>
+             
+            </div>
+          )}
+        </Droppable>
+        <Droppable droppableId="droppable2">
+          {(provided, snapshot) => (
+            <div
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+              style={getListStyle(snapshot.isDraggingOver)}
+            >
+            <div className='task-container'>
+              <div className='task-content'>
+                <h3 className='bg-primary'>Daily Target</h3>
+                {this.state.items.map((item, index) => (
+                <Draggable key={item.id} draggableId={item.id} index={index}>
+                    
+                  {(provided, snapshot) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      style={getItemStyle(
+                        snapshot.isDragging,
+                        provided.draggableProps.style
+                      )}
+                    >
+                      {item.content}
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+              </div>
+            </div>
               
-                                {tasklist.map(({ id, item },index) =>
-                                
-                                    <Draggable key={id} draggableId={id} index={index}>
-                                        {(provided) => (
-                                            <p className="task" {...provided.droppableProps} {...provided.dragHandleProps} ref={provided}>
-                                                {item}
-                                            </p>
-                                        )}
-                                        {provided.placeholder}
-                                    </Draggable>
-                      
-                                )}
-                            </div>
-                        )}
-                    </Droppable>
-                    <Droppable id="tasker">
-                        {(provided) => (
-                            <div className="daily box" {...provided.droppableProps} ref={provided.innerRef}>
-                                <h3>Daily Target</h3>
-                            </div> 
-                        )}
-                    </Droppable> 
-                </div>
-            </DragDropContext >            
-       </div >                
-    )
+            </div>
+          )}
+        </Droppable>
+        </div>
+        
+    );
+  }
 }
