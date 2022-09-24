@@ -5,6 +5,7 @@ import './scrumboard.css'
 import { reorder, move} from '../tasks/task'
 import Tasks from '../tasks/task'
 import { DragDropContext } from 'react-beautiful-dnd';
+import { tasklist } from '../../static/task';
 
 
 export class Scrumboard extends Component {
@@ -13,7 +14,9 @@ export class Scrumboard extends Component {
     this.state = {
       data: details,
       isOpen: false,
-      task: null
+      task: tasklist,
+      doneList: []
+      
     }
   }
 
@@ -29,7 +32,7 @@ export class Scrumboard extends Component {
 
     if (source.droppableId === destination.droppableId) {
         const items = reorder(
-            this.getList(source.droppableId),
+            this.state.task,
             source.index,
             destination.index
         );
@@ -43,8 +46,8 @@ export class Scrumboard extends Component {
         this.setState(state);
     } else {
         const result = move(
-            this.getList(source.droppableId),
-            this.getList(destination.droppableId),
+            this.state.task,
+            this.state.doneList,
             source,
             destination
         );
@@ -81,7 +84,7 @@ export class Scrumboard extends Component {
   
   render() {
     return (
-      <DragDropContext>
+      <DragDropContext onDragEnd={this.onDragEnd}>
         <nav className='nav bg-primary'>
           <h3>CHATSCRUM</h3>
           <div >
@@ -91,7 +94,7 @@ export class Scrumboard extends Component {
         </nav>
         <h4>Hello {details.fullname} Welcome to your scrumboard</h4>
         <div className='task-container'>
-          <Tasks/>
+          <Tasks list={this.state.task} selected={this.state.doneList}/>
         </div>
         <div id="modal" className={this.state.isOpen ? "show" : "hidden"}>
             <div className='modal-header'>

@@ -23,7 +23,7 @@ export const move = (source, destination, droppableSource, droppableDestination)
     const sourceClone = Array.from(source);
     const destClone = Array.from(destination);
     const [removed] = sourceClone.splice(droppableSource.index, 1);
-
+ 
     destClone.splice(droppableDestination.index, 0, removed);
 
     const result = {};
@@ -62,27 +62,13 @@ export default class Task extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: tasklist
+      items: this.props.list,
+      selected: this.props.selected
     };
-    this.onDragEnd = this.onDragEnd.bind(this);
+    
   }
 
-  onDragEnd(result) {
-    // dropped outside the list
-    if (!result.destination) {
-      return;
-    }
-
-    const items = reorder(
-      this.state.items,
-      result.source.index,
-      result.destination.index
-    );
-
-    this.setState({
-      items
-    });
-  }
+ 
 
   // Normally you would want to split things out into separate components.
   // But in this example everything is just done in one place for simplicity
@@ -137,7 +123,7 @@ export default class Task extends Component {
             <div className='task-container'>
               <div className='task-content'>
                 <h3 className='bg-primary'>Daily Target</h3>
-                {this.state.items.map((item, index) => (
+                {this.state.selected.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
                     
                   {(provided, snapshot) => (
