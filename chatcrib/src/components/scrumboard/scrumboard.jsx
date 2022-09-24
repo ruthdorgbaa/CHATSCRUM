@@ -70,9 +70,7 @@ export class Scrumboard extends Component {
     })
   }
 
-  handleDelete = (index, position) => {
-    console.log(index)
-   
+  handleDelete = (index, position) => { 
     if (position === "L"){
       const newarr =  this.state.task
       newarr.splice(index,1)
