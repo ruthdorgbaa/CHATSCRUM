@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { tasklist } from "../../static/task";
+import { Droppable, Draggable } from "react-beautiful-dnd";
+
 
 // a little function to help us with reordering the result
 export const reorder = (list, startIndex, endIndex) => {
@@ -52,9 +51,9 @@ const getListStyle = isDraggingOver => ({
 });
 
 export default class Task extends Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
   // Normally you would want to split things out into separate components.
   // But in this example everything is just done in one place for simplicity
   render() {
@@ -71,22 +70,25 @@ export default class Task extends Component {
               <div className='task-content'>
                 <h3 className='bg-primary'>Weekly Tasks</h3>
                 {this.props.list.map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
+                  <div onClick={() => this.props.handleDelete(index,"L")}>
+                    <Draggable key={item.id} draggableId={item.id} index={index}>
                     
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      style={getItemStyle(
-                        snapshot.isDragging,
-                        provided.draggableProps.style
-                      )}
-                    >
-                      {item.content}
-                    </div>
-                  )}
-                </Draggable>
+                    {(provided, snapshot) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        style={getItemStyle(
+                          snapshot.isDragging,
+                          provided.draggableProps.style
+                        )}
+                      >
+                        {item.content}
+                      </div>
+                    )}
+                  </Draggable>
+                  </div>
+                
               ))}
               {provided.placeholder}
               </div>
@@ -107,22 +109,25 @@ export default class Task extends Component {
               <div className='task-content'>
                 <h3 className='bg-primary'>Daily Target</h3>
                 {this.props.selected.map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
+                  <div onClick={() => this.props.handleDelete(index)}>
+                    <Draggable key={item.id} draggableId={item.id} index={index}>
                     
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      style={getItemStyle(
-                        snapshot.isDragging,
-                        provided.draggableProps.style
-                      )}
-                    >
-                      {item.content}
-                    </div>
-                  )}
-                </Draggable>
+                    {(provided, snapshot) => (
+                      <div 
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        style={getItemStyle(
+                          snapshot.isDragging,
+                          provided.draggableProps.style
+                        )}
+                      >
+                        {item.content}
+                      </div>
+                    )}
+                  </Draggable>
+                  </div>
+                
               ))}
               {provided.placeholder}
               </div>

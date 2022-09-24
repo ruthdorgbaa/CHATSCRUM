@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { details } from '../../static/login-detail'
-import { Link } from 'react-router-dom';
 import './scrumboard.css'
 import { reorder, move} from '../tasks/task'
 import Tasks from '../tasks/task'
@@ -65,10 +64,29 @@ export class Scrumboard extends Component {
       isOpen: true,
     })
   };
-   closeModal = () => {
+  closeModal = () => {
     this.setState({
       isOpen: false,
     })
+  }
+
+  handleDelete = (index, position) => {
+    console.log(index)
+   
+    if (position === "L"){
+      const newarr =  this.state.task
+      newarr.splice(index,1)
+      this.setState({
+        task: newarr
+      })
+    }else{
+      const newarr =  this.state.doneList
+      newarr.splice(index,1)
+      this.setState({
+        doneList: this.state.doneList.splice(index,1)
+      })
+    }
+    
   }
 
   handleChange = (e) => {
@@ -100,7 +118,7 @@ export class Scrumboard extends Component {
         </nav>
         <h4>Hello {details.fullname} Welcome to your scrumboard</h4>
         <div className='task-container'>
-          <Tasks list={this.state.task} selected={this.state.doneList} openModal={this.openModal}/>
+          <Tasks handleDelete={this.handleDelete} list={this.state.task} selected={this.state.doneList} openModal={this.openModal}/>
         </div>
         <div id="modal" className={this.state.isOpen ? "show" : "hidden"}>
             <div className='modal-header'>
