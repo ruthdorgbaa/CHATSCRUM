@@ -5,6 +5,8 @@ import { reorder, move} from '../tasks/task'
 import Tasks from '../tasks/task'
 import { DragDropContext } from 'react-beautiful-dnd';
 import { tasklist } from '../../static/task';
+import User from '../user/user';
+
 
 
 export class Scrumboard extends Component {
@@ -118,19 +120,22 @@ export class Scrumboard extends Component {
         </nav>
         <h4>Hello {details.fullname} Welcome to your scrumboard</h4>
         <div className='task-container'>
-          <Tasks handleDelete={this.handleDelete} list={this.state.task} selected={this.state.doneList} openModal={this.openModal}/>
+          <Tasks handleDelete={this.handleDelete} list={this.state.task} selected={this.state.doneList} openModal={this.openModal} />
+         
         </div>
         <div id="modal" className={this.state.isOpen ? "show" : "hidden"}>
             <div className='modal-header'>
               <h5>Add Task</h5>
               <h5 onClick={() => this.closeModal()} id="close" className='btn btn-danger'>X</h5>
-            </div>
+          </div>
+         
             <form action="" onSubmit={this.handleSubmit}>
               <input onChange={this.handleChange} className='form-control' type="text" />
               <button type='submit' className='btn btn-primary'>Confirm</button>
             </form>
           </div>
       </DragDropContext>
+               
     )
   }
 }
