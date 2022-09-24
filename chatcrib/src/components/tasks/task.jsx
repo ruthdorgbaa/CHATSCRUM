@@ -3,13 +3,6 @@ import ReactDOM from "react-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { tasklist } from "../../static/task";
 
-// fake data generator
-const getItems = count =>
-  Array.from({ length: count }, (v, k) => k).map(k => ({
-    id: `item-${k}`,
-    content: `item ${k}`
-  }));
-
 // a little function to help us with reordering the result
 export const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -25,11 +18,11 @@ export const move = (source, destination, droppableSource, droppableDestination)
     const [removed] = sourceClone.splice(droppableSource.index, 1);
  
     destClone.splice(droppableDestination.index, 0, removed);
-
+    
     const result = {};
     result[droppableSource.droppableId] = sourceClone;
     result[droppableDestination.droppableId] = destClone;
-
+    
     return result;
 };
 
@@ -61,15 +54,7 @@ const getListStyle = isDraggingOver => ({
 export default class Task extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      items: this.props.list,
-      selected: this.props.selected
-    };
-    
   }
-
- 
-
   // Normally you would want to split things out into separate components.
   // But in this example everything is just done in one place for simplicity
   render() {
@@ -85,7 +70,7 @@ export default class Task extends Component {
                  <div>
               <div className='task-content'>
                 <h3 className='bg-primary'>Weekly Tasks</h3>
-                {this.state.items.map((item, index) => (
+                {this.props.list.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
                     
                   {(provided, snapshot) => (
@@ -104,10 +89,8 @@ export default class Task extends Component {
                 </Draggable>
               ))}
               {provided.placeholder}
-                 
-                  {/* <Tasks/> */}
               </div>
-              <button onClick={() => this.openModal()} class='btn btn-primary'>ADD TASK</button>
+              <button onClick={() => this.props.openModal()} class='btn btn-primary'>ADD TASK</button>
             </div>
              
             </div>
@@ -123,7 +106,7 @@ export default class Task extends Component {
             <div className='task-container'>
               <div className='task-content'>
                 <h3 className='bg-primary'>Daily Target</h3>
-                {this.state.selected.map((item, index) => (
+                {this.props.selected.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
                     
                   {(provided, snapshot) => (

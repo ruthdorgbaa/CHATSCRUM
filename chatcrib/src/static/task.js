@@ -1,6 +1,6 @@
 export const tasklist = [
-    { id: "one", content: "Build chatscrum" },
-    { id: "two", content: "Solve freecodecamp algorithm" },
-    { id: "three", content: "Play scrabble" },
-    { id: "four", content: "Go to church for rehearsals" }
+    { id: "1", content: "Build chatscrum" },
+    { id: "2", content: "Solve freecodecamp algorithm" },
+    { id: "3", content: "Play scrabble" },
+    { id: "4", content: "Go to church for rehearsals" }
 ]

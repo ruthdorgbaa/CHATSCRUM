@@ -15,13 +15,11 @@ export class Scrumboard extends Component {
       data: details,
       isOpen: false,
       task: tasklist,
+      newTask: "",
       doneList: []
       
     }
   }
-
-  getList = id => this.state[this.id2List[id]];
-
   onDragEnd = result => {
     const { source, destination } = result;
 
@@ -43,6 +41,7 @@ export class Scrumboard extends Component {
             state = { selected: items };
         }
 
+        console.log(state)
         this.setState(state);
     } else {
         const result = move(
@@ -53,9 +52,12 @@ export class Scrumboard extends Component {
         );
 
         this.setState({
-            items: result.droppable,
-            selected: result.droppable2
+            task: result.droppable,
+            doneList: result.droppable2
         });
+
+        console.log(this.state)
+       
     }
 };
   openModal = () => {
@@ -71,7 +73,7 @@ export class Scrumboard extends Component {
 
   handleChange = (e) => {
     this.setState({
-      task: e.target.value
+      newTask: e.target.value
     })
   }
 
@@ -80,6 +82,10 @@ export class Scrumboard extends Component {
     this.setState({
       isOpen: false
     })
+    this.setState(prev=> ({
+      task: [...prev.task,{id: `${this.state.task.length+1}`,content:this.state.newTask}],
+      newTask: ""
+    }))
   }
   
   render() {
@@ -94,7 +100,7 @@ export class Scrumboard extends Component {
         </nav>
         <h4>Hello {details.fullname} Welcome to your scrumboard</h4>
         <div className='task-container'>
-          <Tasks list={this.state.task} selected={this.state.doneList}/>
+          <Tasks list={this.state.task} selected={this.state.doneList} openModal={this.openModal}/>
         </div>
         <div id="modal" className={this.state.isOpen ? "show" : "hidden"}>
             <div className='modal-header'>
