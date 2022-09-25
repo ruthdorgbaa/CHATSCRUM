@@ -41,8 +41,7 @@ export class User extends Component {
                 {this.state.User.map(({ nickname, id }) => {
                     return (
                         <div className="user" key={id}>
-                            <span><i className="fas fa-user"></i></span>{nickname}
-
+                            <span className='icon'><i className="fas fa-user"></i></span>{nickname}
                         </div>
                     )
                 })}
