@@ -119,8 +119,8 @@ export class Scrumboard extends Component {
         <h4>Hello {details.fullname} Welcome to your scrumboard</h4>
         <div className='task-container'>
           <Tasks handleDelete={this.handleDelete} list={this.state.task} selected={this.state.doneList} openModal={this.openModal} />
-         
         </div>
+        <User/>
         <div id="modal" className={this.state.isOpen ? "show" : "hidden"}>
             <div className='modal-header'>
               <h5>Add Task</h5>
